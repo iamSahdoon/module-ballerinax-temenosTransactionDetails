@@ -27,7 +27,7 @@ configurable string transactionAmount = "1000";
 configurable string transactionCurrency = "USD";
 
 configurable string transactionReference = "AAACT25100YLCHKPRK";
-// configurable string entryReference = "209068141701763.220001";
+configurable string entryReference = "209068141701763.220001";
 
 
 
@@ -82,6 +82,20 @@ isolated function testGetTransactionTax() returns error? {
 isolated function testGetTransactionReference() returns error? {
     StatementForTransactionResponse|error response = temenos->/[transactionReference]/transactions.get();
     if response is StatementForTransactionResponse {
+        io:println("Success Response: ", response);
+        test:assertTrue(true, "Successfully retrieved transaction details");
+    } else {
+        io:println("Error Response: ", response.message());
+        test:assertFail("Failed to retrieve transaction details: " + response.message());
+    }
+}
+
+@test:Config {
+    groups: ["get_test4"]
+}
+isolated function testGetTransactionEntryReference() returns error? {
+    TransactionDetailsResponse|error response = temenos->/[entryReference].get();
+    if response is TransactionDetailsResponse {
         io:println("Success Response: ", response);
         test:assertTrue(true, "Successfully retrieved transaction details");
     } else {
