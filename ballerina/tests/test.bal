@@ -21,10 +21,10 @@ final string serviceUrl = "https://api.temenos.com/api/v2.4.0/holdings/transacti
 configurable string accountId = "156396";
 configurable string listType = "RECENT";
 configurable string transactionCount = "10";
-// configurable string customerId = "190317";
-// configurable string taxRate = "10";
-// configurable string transactionAmount = "1000";
-// configurable string transactionCurrency = "USD";
+configurable string customerId = "190317";
+configurable string taxRate = "10";
+configurable string transactionAmount = "1000";
+configurable string transactionCurrency = "USD";
 // configurable string transactionReference = "AAACT25100YLCHKPRK";
 // configurable string entryReference = "209068141701763.220001";
 
@@ -55,3 +55,21 @@ isolated function testGetTransactionDetails() returns error? {
     }
 }
 
+
+@test:Config {
+    groups: ["get_test2"]
+}
+isolated function testGetTransactionTax() returns error? {
+    CalculateTaxDistributionQueries queries = {
+        customerId: customerId,
+        taxRate: taxRate,
+        transactionAmount: transactionAmount,
+        transactionCurrency: transactionCurrency
+    };
+    TaxDistributionResponse|error response = temenos->/taxes.get(queries = queries);
+    if response is TaxDistributionResponse {
+        io:println("Success Response: ", response);
+    } else {
+        io:println("Error Response: ", response);
+    }
+}
