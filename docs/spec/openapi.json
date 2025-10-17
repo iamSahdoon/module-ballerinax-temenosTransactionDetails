@@ -1,0 +1,1190 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "API to retrieve information on transactions and accounting entries.",
+    "version" : "v2.4.0",
+    "title" : "Transaction Details"
+  },
+  "host" : "api.temenos.com",
+  "basePath" : "/api/v2.4.0/",
+  "tags" : [ {
+    "name" : "RETAIL"
+  } ],
+  "schemes" : [ "http", "https" ],
+  "security" : [ {
+    "basicAuth" : [ ]
+  }, {
+    "apiKey" : [ ]
+  } ],
+  "paths" : {
+    "/holdings/transactions/{entryReference}" : {
+      "get" : {
+        "tags" : [ "RETAIL" ],
+        "summary" : "Retrieves transaction details for a specific accounting entry",
+        "description" : "Retrieves the details of a transaction for a specific accounting entry reference that includes debit and credit party details , amount , date , payment reference , charges and cheque details.",
+        "operationId" : "getTransactionDetails",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "entryReference",
+          "in" : "path",
+          "description" : "It is the transaction reference. This is the identifier of the transaction on Temenos Core Banking system.",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "page_size",
+          "in" : "query",
+          "description" : "The total number of records per page",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "page_start",
+          "in" : "query",
+          "description" : "The record from which the response should be displayed",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "page_token",
+          "in" : "query",
+          "description" : "Unique id expected to get as part of response from Transact on every enquiry request",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "credentials",
+          "in" : "header",
+          "description" : "Username and password to authenticate the API against core-banking.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "companyId",
+          "in" : "header",
+          "description" : "Identifier of the lead company of the underlying Entity/Company/Branch for the respective contract for customer data protection purposes. Example US0010001.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "deviceId",
+          "in" : "header",
+          "description" : "Identifies the device type",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "userRole",
+          "in" : "header",
+          "description" : "User who initiated the transaction",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "disablePagination",
+          "in" : "header",
+          "description" : "Indicates the pagination header attributes availability. If set to 'true', it fetches all the data",
+          "required" : false,
+          "type" : "boolean"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "TransactionDetailsResponse",
+            "schema" : {
+              "$ref" : "#/definitions/TransactionDetailsResponse"
+            }
+          },
+          "default" : {
+            "description" : "QueryErrorResponse",
+            "schema" : {
+              "$ref" : "#/definitions/QueryErrorResponse"
+            }
+          },
+          "400" : {
+            "description" : "BusinessQueryErrorResponse",
+            "schema" : {
+              "$ref" : "#/definitions/BusinessQueryErrorResponse"
+            }
+          },
+          "500" : {
+            "description" : "SystemQueryErrorResponse",
+            "schema" : {
+              "$ref" : "#/definitions/SystemQueryErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/holdings/transactions/{transactionReference}/transactions" : {
+      "get" : {
+        "tags" : [ "RETAIL" ],
+        "summary" : "Retrieves accounting entries for a specific transaction reference",
+        "description" : "Retrieves the details of accounting entries for a specific transaction that includes entry reference , account number , name , transaction code , date , amount , currency and narrative.",
+        "operationId" : "getStatementForTransaction",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "transactionReference",
+          "in" : "path",
+          "description" : "Contains the identifier for the transaction in the core system",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "page_size",
+          "in" : "query",
+          "description" : "The total number of records per page",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "page_start",
+          "in" : "query",
+          "description" : "The record from which the response should be displayed",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "page_token",
+          "in" : "query",
+          "description" : "Unique id expected to get as part of response from Transact on every enquiry request",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "credentials",
+          "in" : "header",
+          "description" : "Username and password to authenticate the API against core-banking.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "companyId",
+          "in" : "header",
+          "description" : "Identifier of the lead company of the underlying Entity/Company/Branch for the respective contract for customer data protection purposes. Example US0010001.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "deviceId",
+          "in" : "header",
+          "description" : "Identifies the device type",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "userRole",
+          "in" : "header",
+          "description" : "User who initiated the transaction",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "disablePagination",
+          "in" : "header",
+          "description" : "Indicates the pagination header attributes availability. If set to 'true', it fetches all the data",
+          "required" : false,
+          "type" : "boolean"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "StatementForTransactionResponse",
+            "schema" : {
+              "$ref" : "#/definitions/StatementForTransactionResponse"
+            }
+          },
+          "default" : {
+            "description" : "QueryErrorResponse",
+            "schema" : {
+              "$ref" : "#/definitions/QueryErrorResponse"
+            }
+          },
+          "400" : {
+            "description" : "BusinessQueryErrorResponse",
+            "schema" : {
+              "$ref" : "#/definitions/BusinessQueryErrorResponse"
+            }
+          },
+          "500" : {
+            "description" : "SystemQueryErrorResponse",
+            "schema" : {
+              "$ref" : "#/definitions/SystemQueryErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/holdings/transactions" : {
+      "get" : {
+        "tags" : [ "RETAIL" ],
+        "summary" : "Retrieves the details of account transaction",
+        "description" : "Retrieves transaction details for the specified account that includes entry reference , account number , name , transaction code , date , amount , currency , narrative , cheque numbers and balance.",
+        "operationId" : "getAccountTransactions",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "accountId",
+          "in" : "query",
+          "description" : "Identifier of the account. Often referred to as the account number, yet for consistency this is always referred to as accountId. Accepts both IBAN & BBAN",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "customerId",
+          "in" : "query",
+          "description" : "Identifier of the customer",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "listType",
+          "in" : "query",
+          "description" : "Indicates the transaction search type",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "transactionCount",
+          "in" : "query",
+          "description" : "Indicates the total number of transactions",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "payType",
+          "in" : "query",
+          "description" : "Indicates the identifier of payment types for  letter of credit.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "dateFrom",
+          "in" : "query",
+          "description" : "Start date of the loan",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "dateTo",
+          "in" : "query",
+          "description" : "End date of the loan",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "minimumAmount",
+          "in" : "query",
+          "description" : "The minimum account balance required.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "maximumAmount",
+          "in" : "query",
+          "description" : "The maximum account balance allowed.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "displayName",
+          "in" : "query",
+          "description" : "Contains the name used for display or enrichment purposes",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "transactionCode",
+          "in" : "query",
+          "description" : "Identifies the system internal transaction code applicable to the transaction",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "entryReference",
+          "in" : "query",
+          "description" : "It is the transaction reference. This is the identifier of the transaction on Temenos Core Banking system.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "chequeNumber",
+          "in" : "query",
+          "description" : "Cheque number associated with the transaction or accounting entry.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "chequeNumberRange",
+          "in" : "query",
+          "description" : "Indicates the criteria for the range operation search on cheque numbers",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "skipImageDetails",
+          "in" : "query",
+          "description" : "Indicates to skip retrieval of image specific details for a statement reference. Accept Values YES, NO or NULL",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "statementSortMethod",
+          "in" : "query",
+          "description" : "Indicates the method in which the statement entries are to be sorted. Possible values oldest/latest. Oldest - displays the entries in ascending timestamp order. Latest - displays the entries in descending timestamp order",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "statementPageSize",
+          "in" : "query",
+          "description" : "Contains the total number of statement to be returned per page",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "statementPageNumber",
+          "in" : "query",
+          "description" : "Contains the record from which the statement must be displayed",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "entryReferenceFrom",
+          "in" : "query",
+          "description" : "Indicates the entry from which the transaction history needs to be retrieved. If an end date is not specified, transactions from delta list till 'today' are retrieved.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "suppressMaskEntries",
+          "in" : "query",
+          "description" : "Indicator to skip retrieval of masked entry details. Example, reversal entries of a transaction. Allowed values are Yes or Y.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "page_size",
+          "in" : "query",
+          "description" : "The total number of records per page",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "page_start",
+          "in" : "query",
+          "description" : "The record from which the response should be displayed",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "page_token",
+          "in" : "query",
+          "description" : "Unique id expected to get as part of response from Transact on every enquiry request",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "credentials",
+          "in" : "header",
+          "description" : "Username and password to authenticate the API against core-banking.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "companyId",
+          "in" : "header",
+          "description" : "Identifier of the lead company of the underlying Entity/Company/Branch for the respective contract for customer data protection purposes. Example US0010001.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "deviceId",
+          "in" : "header",
+          "description" : "Identifies the device type",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "userRole",
+          "in" : "header",
+          "description" : "User who initiated the transaction",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "disablePagination",
+          "in" : "header",
+          "description" : "Indicates the pagination header attributes availability. If set to 'true', it fetches all the data",
+          "required" : false,
+          "type" : "boolean"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "AccountTransactionsResponse",
+            "schema" : {
+              "$ref" : "#/definitions/AccountTransactionsResponse"
+            }
+          },
+          "default" : {
+            "description" : "QueryErrorResponse",
+            "schema" : {
+              "$ref" : "#/definitions/QueryErrorResponse"
+            }
+          },
+          "400" : {
+            "description" : "BusinessQueryErrorResponse",
+            "schema" : {
+              "$ref" : "#/definitions/BusinessQueryErrorResponse"
+            }
+          },
+          "500" : {
+            "description" : "SystemQueryErrorResponse",
+            "schema" : {
+              "$ref" : "#/definitions/SystemQueryErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/holdings/transactions/taxes" : {
+      "get" : {
+        "tags" : [ "RETAIL" ],
+        "summary" : "Calculates applicable taxes for the transaction.",
+        "description" : "Calculates the applicable tax amount and tax distribution based on the transaction amount, currency, tax type or tax code or tax rate and distribution method provided. System uses the given tax rate as primary rate or can use tax type or code to derive the applicable tax rates. While using tax type, customer key is also required to fetch the tax code and its rates applicable for the specific customer. When distribution indicator is NET, the system calculates the tax amount and NET distribution which excludes the tax amount, whereas if distribution indicator is GROSS, the system calculates the tax amount and GROSS distribution which includes the tax amount. When multiple details are given, priority order is as follows - tax rate > tax code > tax type.",
+        "operationId" : "calculateTaxDistribution",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "customerId",
+          "in" : "query",
+          "description" : "Identifier of the customer",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "taxDistributionIndicator",
+          "in" : "query",
+          "description" : "Indicates the distribution method used to calculate applicable taxes for the transaction. Possible values are NET and GROSS.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "taxType",
+          "in" : "query",
+          "description" : "Indicates the tax identification type for the customer, ex-SSN, TIN, FTIN etc.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "taxCode",
+          "in" : "query",
+          "description" : "Represents a reference on the TAX table which will indicate the rate to be used for computation of taxation for the associated property",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "taxRate",
+          "in" : "query",
+          "description" : "Indicates the tax rate to be applied on a transaction.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "taxAmount",
+          "in" : "query",
+          "description" : "Indicates the tax applicable for the transaction for a tax type.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "transactionAmount",
+          "in" : "query",
+          "description" : "Contains the transaction amount. This is based on the currency, either local or foreign currency",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "transactionCurrency",
+          "in" : "query",
+          "description" : "Indicates the currency of the transaction. For example GBP, USD etc.",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "page_size",
+          "in" : "query",
+          "description" : "The total number of records per page",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "page_start",
+          "in" : "query",
+          "description" : "The record from which the response should be displayed",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "page_token",
+          "in" : "query",
+          "description" : "Unique id expected to get as part of response from Transact on every enquiry request",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "credentials",
+          "in" : "header",
+          "description" : "Username and password to authenticate the API against core-banking.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "companyId",
+          "in" : "header",
+          "description" : "Identifier of the lead company of the underlying Entity/Company/Branch for the respective contract for customer data protection purposes. Example US0010001.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "deviceId",
+          "in" : "header",
+          "description" : "Identifies the device type",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "userRole",
+          "in" : "header",
+          "description" : "User who initiated the transaction",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "disablePagination",
+          "in" : "header",
+          "description" : "Indicates the pagination header attributes availability. If set to 'true', it fetches all the data",
+          "required" : false,
+          "type" : "boolean"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "TaxDistributionResponse",
+            "schema" : {
+              "$ref" : "#/definitions/TaxDistributionResponse"
+            }
+          },
+          "default" : {
+            "description" : "QueryErrorResponse",
+            "schema" : {
+              "$ref" : "#/definitions/QueryErrorResponse"
+            }
+          },
+          "400" : {
+            "description" : "BusinessQueryErrorResponse",
+            "schema" : {
+              "$ref" : "#/definitions/BusinessQueryErrorResponse"
+            }
+          },
+          "500" : {
+            "description" : "SystemQueryErrorResponse",
+            "schema" : {
+              "$ref" : "#/definitions/SystemQueryErrorResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions" : {
+    "basicAuth" : {
+      "type" : "basic"
+    },
+    "apiKey" : {
+      "type" : "apiKey",
+      "name" : "Authorization",
+      "in" : "header"
+    }
+  },
+  "definitions" : {
+    "QueryHeader" : {
+      "properties" : {
+        "status" : {
+          "type" : "string",
+          "description" : "Status of the API(success/failed)"
+        },
+        "audit" : {
+          "type" : "object",
+          "properties" : {
+            "T24_time" : {
+              "type" : "integer",
+              "format" : "int32",
+              "description" : "Time taken to response by Transact"
+            },
+            "versionNumber" : {
+              "type" : "string",
+              "description" : "The CURR.NO. of the record"
+            },
+            "requestParse_time" : {
+              "type" : "number",
+              "description" : "Time taken to parse the request by IRIS"
+            },
+            "responseParse_time" : {
+              "type" : "number",
+              "description" : "Time taken to parse the response by IRIS"
+            }
+          }
+        },
+        "page_size" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "The total number of records per page"
+        },
+        "page_start" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "The record from which the response should be displayed"
+        },
+        "total_size" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "The total number of records present"
+        },
+        "page_token" : {
+          "type" : "string",
+          "description" : "Unique id expected to get as part of response from Transact on every enquiry request"
+        }
+      }
+    },
+    "TransactionDetailsResponse" : {
+      "properties" : {
+        "header" : {
+          "$ref" : "#/definitions/QueryHeader"
+        },
+        "body" : {
+          "$ref" : "#/definitions/TransactionDetailsResponseBody"
+        }
+      },
+      "description" : "TransactionDetailsResponse"
+    },
+    "TransactionDetailsResponseBody" : {
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "debits" : {
+            "type" : "array",
+            "description" : "Debit value of the transaction ",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "debitCurrencyId" : {
+                  "type" : "string",
+                  "description" : "The currency of the debit side in payment transaction. "
+                },
+                "debitAmount" : {
+                  "type" : "string",
+                  "description" : "Amount to be debited in a payment transaction"
+                },
+                "debitValueDate" : {
+                  "type" : "string",
+                  "format" : "date",
+                  "description" : "Date on which the amount will be debited for settlement"
+                },
+                "debitAccountId" : {
+                  "type" : "string",
+                  "description" : "Indicates the debit account number of the payment or transaction."
+                },
+                "debitAccountIBAN" : {
+                  "type" : "string",
+                  "description" : "International Bank Account Number (IBAN) of the debtor account, required only for International transfers/payments outside the Bank. For example: GB98 MIDL07009312345678, FR7630006000011234567890189"
+                }
+              }
+            }
+          },
+          "credits" : {
+            "type" : "array",
+            "description" : "Credit value of the transaction",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "creditCurrencyId" : {
+                  "type" : "string",
+                  "description" : "Specifies the credit currency. For example: USD, EUR etc."
+                },
+                "creditAmount" : {
+                  "type" : "string",
+                  "description" : "Amount to be credited in a payment transaction"
+                },
+                "creditValueDate" : {
+                  "type" : "string",
+                  "format" : "date",
+                  "description" : "Reference quoted by the credit account for a payment"
+                },
+                "creditAccountId" : {
+                  "type" : "string",
+                  "description" : "Credit account identifier of the payment or transaction"
+                },
+                "creditAccountIBAN" : {
+                  "type" : "string",
+                  "description" : "Indicates the IBAN of the credit account"
+                }
+              }
+            }
+          },
+          "beneficiaries" : {
+            "type" : "array",
+            "description" : "Identifies the Beneficiary name and address of the Standing Order",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "beneficiaryIBAN" : {
+                  "type" : "string",
+                  "description" : "International Bank Account Number (IBAN) of the beneficiary account, required only for International transfers/payments outside the Bank. For example: GB98 MIDL07009312345678, FR7630006000011234567890189"
+                },
+                "beneficiaryAccountId" : {
+                  "type" : "string",
+                  "description" : "Unique account identifier of the beneficiary account number."
+                },
+                "beneficiaryCustomerId" : {
+                  "type" : "string",
+                  "description" : "Identifies the Customer who is to be the ultimate receiver of the funds transferred by the sending bank when this Beneficiary is not a bank."
+                },
+                "beneficiaryBank" : {
+                  "type" : "string",
+                  "description" : "Bank for the beneficiary"
+                }
+              }
+            }
+          },
+          "entryReference" : {
+            "type" : "string",
+            "description" : "It is the transaction reference. This is the identifier of the transaction on Temenos Core Banking system."
+          },
+          "bookingDate" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Indicates the date on which this business activity is booked in the underlying system. The effective date and booking date could be different if systems allow forward/back dated business transactions. Dates are expected in YYYYMMDD format. If booking date is not passed, effective date would be assumed as booking date."
+          },
+          "narrative" : {
+            "type" : "string",
+            "description" : "The additional text printed on descriptive statements in addition to the standard narrative and/or reference"
+          },
+          "currencyId" : {
+            "type" : "string",
+            "description" : "Identifier of the currency. This is the 3-letter ISO 4217 code of the currency."
+          },
+          "clearingDate" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Contains the date from which the payment is expected and is used to indicate the exposure date for the payment."
+          },
+          "valueDate" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Indicates the value date on which the underlying accounting entry is to be given value (for interest purposes)"
+          },
+          "transactionReference" : {
+            "type" : "string",
+            "description" : "Contains the identifier for the transaction in the core system"
+          },
+          "transactionName" : {
+            "type" : "string",
+            "description" : "The transaction description"
+          },
+          "localCurrencyId" : {
+            "type" : "string",
+            "description" : "The ISO code (3 letters) for the institution's local currency."
+          },
+          "chargeType" : {
+            "type" : "string",
+            "description" : "Indicates the charge types which are applicable for the transaction. Example: CORRBKCHG"
+          },
+          "chargeAmount" : {
+            "type" : "string",
+            "description" : "Retrieves the charge amount after redeem"
+          },
+          "dateOfOriginalAuthorisation" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "This is a system populated field to display the date on which MT740 (Authorization to Reimburse) was sent."
+          },
+          "processingDate" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "The date when payment instruction is processed in system."
+          },
+          "chequeNumber" : {
+            "type" : "string",
+            "description" : "Cheque number associated with the transaction or accounting entry."
+          },
+          "bankName" : {
+            "type" : "string",
+            "description" : "The name of the bank being referred to."
+          },
+          "accountId" : {
+            "type" : "string",
+            "description" : "Identifier of the account. Often referred to as the account number, yet for consistency this is always referred to as accountId. Accepts both IBAN & BBAN"
+          },
+          "customerRate" : {
+            "type" : "string",
+            "description" : "The exchange rate that is actually applied for currency conversion in case of transactions involving FX conversion. "
+          },
+          "extensions" : {
+            "type" : "object",
+            "description" : "Indicates the extension data"
+          }
+        }
+      }
+    },
+    "ErrorHeader" : {
+      "properties" : {
+        "status" : {
+          "type" : "string",
+          "description" : "Status of the API(success/failed)"
+        },
+        "audit" : {
+          "type" : "object",
+          "properties" : {
+            "T24_time" : {
+              "type" : "integer",
+              "format" : "int32",
+              "description" : "Time taken to response by Transact"
+            },
+            "versionNumber" : {
+              "type" : "string",
+              "description" : "The CURR.NO. of the record"
+            },
+            "requestParse_time" : {
+              "type" : "number",
+              "description" : "Time taken to parse the request by IRIS"
+            },
+            "responseParse_time" : {
+              "type" : "number",
+              "description" : "Time taken to parse the response by IRIS"
+            }
+          }
+        }
+      }
+    },
+    "QueryErrorResponse" : {
+      "properties" : {
+        "header" : {
+          "$ref" : "#/definitions/ErrorHeader"
+        },
+        "error" : {
+          "$ref" : "#/definitions/QueryErrorResponseBody"
+        }
+      },
+      "description" : "QueryErrorResponse"
+    },
+    "QueryErrorResponseBody" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string",
+          "description" : "The identifier of the error message"
+        },
+        "message" : {
+          "type" : "string",
+          "description" : "The actual Transact error message "
+        },
+        "type" : {
+          "type" : "string",
+          "description" : "The identifier of error type: "
+        }
+      }
+    },
+    "BusinessQueryErrorResponse" : {
+      "properties" : {
+        "header" : {
+          "$ref" : "#/definitions/ErrorHeader"
+        },
+        "error" : {
+          "$ref" : "#/definitions/BusinessQueryErrorResponseBody"
+        }
+      },
+      "description" : "BusinessQueryErrorResponse"
+    },
+    "BusinessQueryErrorResponseBody" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string",
+          "description" : "The identifier of the error message"
+        },
+        "message" : {
+          "type" : "string",
+          "description" : "The actual Transact error message for bad requests"
+        },
+        "type" : {
+          "type" : "string",
+          "description" : "The identifier of error type: Business"
+        }
+      }
+    },
+    "SystemQueryErrorResponse" : {
+      "properties" : {
+        "header" : {
+          "$ref" : "#/definitions/ErrorHeader"
+        },
+        "error" : {
+          "$ref" : "#/definitions/SystemQueryErrorResponseBody"
+        }
+      },
+      "description" : "SystemQueryErrorResponse"
+    },
+    "SystemQueryErrorResponseBody" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "string",
+          "description" : "The identifier of the error message"
+        },
+        "message" : {
+          "type" : "string",
+          "description" : "The actual Transact error message caused by server"
+        },
+        "type" : {
+          "type" : "string",
+          "description" : "The identifier of error type: System"
+        }
+      }
+    },
+    "StatementForTransactionResponse" : {
+      "properties" : {
+        "header" : {
+          "$ref" : "#/definitions/QueryHeader"
+        },
+        "body" : {
+          "$ref" : "#/definitions/StatementForTransactionResponseBody"
+        }
+      },
+      "description" : "StatementForTransactionResponse"
+    },
+    "StatementForTransactionResponseBody" : {
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "images" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "documentId" : {
+                  "type" : "string",
+                  "description" : "Based on documentCode, the field defaults the required document codes",
+                  "maxLength" : 11
+                },
+                "imageId" : {
+                  "type" : "string",
+                  "description" : "A system generated unique identifier for the image record",
+                  "maxLength" : 11
+                },
+                "imageType" : {
+                  "type" : "string",
+                  "description" : "Indicates the internal classification of images - such as Photographs, Documents, Passports, etc..,",
+                  "maxLength" : 11
+                }
+              }
+            }
+          },
+          "entryReference" : {
+            "type" : "string",
+            "description" : "It is the transaction reference. This is the identifier of the transaction on Temenos Core Banking system.",
+            "maxLength" : 11
+          },
+          "bookingDate" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Indicates the date on which this business activity is booked in the underlying system. The effective date and booking date could be different if systems allow forward/back dated business transactions. Dates are expected in YYYYMMDD format. If booking date is not passed, effective date would be assumed as booking date."
+          },
+          "narrative" : {
+            "type" : "string",
+            "description" : "The additional text printed on descriptive statements in addition to the standard narrative and/or reference",
+            "maxLength" : 11
+          },
+          "amount" : {
+            "type" : "number",
+            "description" : "This is the payment amount"
+          },
+          "currencyId" : {
+            "type" : "string",
+            "description" : "Identifier of the currency. This is the 3-letter ISO 4217 code of the currency.",
+            "maxLength" : 11
+          },
+          "accountId" : {
+            "type" : "string",
+            "description" : "Identifier of the account. Often referred to as the account number, yet for consistency this is always referred to as accountId. Accepts both IBAN & BBAN",
+            "maxLength" : 11
+          },
+          "accountName" : {
+            "type" : "string",
+            "description" : "Display name or short name of the account specified.",
+            "maxLength" : 11
+          },
+          "companyId" : {
+            "type" : "string",
+            "description" : "Identifier of the lead company of the underlying Entity/Company/Branch for the respective contract for customer data protection purposes. Example US0010001.",
+            "maxLength" : 11
+          },
+          "notes" : {
+            "type" : "string",
+            "description" : "Notes to facilitate the use of the function",
+            "maxLength" : 11
+          },
+          "transactionId" : {
+            "type" : "string",
+            "description" : "Unique transaction identifier for retrieving the details of the transaction. For example: FT0102030333 etc.",
+            "maxLength" : 11
+          },
+          "extensions" : {
+            "type" : "object",
+            "description" : "Indicates the extension data"
+          }
+        }
+      }
+    },
+    "AccountTransactionsResponse" : {
+      "properties" : {
+        "header" : {
+          "$ref" : "#/definitions/QueryHeader"
+        },
+        "body" : {
+          "$ref" : "#/definitions/AccountTransactionsResponseBody"
+        }
+      },
+      "description" : "AccountTransactionsResponse"
+    },
+    "AccountTransactionsResponseBody" : {
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "entryReference" : {
+            "type" : "string",
+            "description" : "It is the transaction reference. This is the identifier of the transaction on Temenos Core Banking system."
+          },
+          "bookingDate" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Indicates the date on which this business activity is booked in the underlying system. The effective date and booking date could be different if systems allow forward/back dated business transactions. Dates are expected in YYYYMMDD format. If booking date is not passed, effective date would be assumed as booking date."
+          },
+          "narrative" : {
+            "type" : "string",
+            "description" : "The additional text printed on descriptive statements in addition to the standard narrative and/or reference"
+          },
+          "accountId" : {
+            "type" : "string",
+            "description" : "Identifier of the account. Often referred to as the account number, yet for consistency this is always referred to as accountId. Accepts both IBAN & BBAN"
+          },
+          "amount" : {
+            "type" : "number",
+            "description" : "This is the payment amount"
+          },
+          "currencyId" : {
+            "type" : "string",
+            "description" : "Identifier of the currency. This is the 3-letter ISO 4217 code of the currency."
+          },
+          "accountName" : {
+            "type" : "string",
+            "description" : "Display name or short name of the account specified."
+          },
+          "companyId" : {
+            "type" : "string",
+            "description" : "Identifier of the lead company of the underlying Entity/Company/Branch for the respective contract for customer data protection purposes. Example US0010001."
+          },
+          "documentId" : {
+            "type" : "string",
+            "description" : "Based on documentCode, the field defaults the required document codes"
+          },
+          "notes" : {
+            "type" : "string",
+            "description" : "Notes to facilitate the use of the function"
+          },
+          "imageId" : {
+            "type" : "string",
+            "description" : "A system generated unique identifier for the image record"
+          },
+          "balance" : {
+            "type" : "number",
+            "description" : "The monetary value of each balance type for an account is itemised."
+          },
+          "transactionReference" : {
+            "type" : "string",
+            "description" : "Contains the identifier for the transaction in the core system"
+          },
+          "transactionType" : {
+            "type" : "string",
+            "description" : "Identifies the transaction type applicable to the transaction being processed, i.e. outward or inward payment. For example: ACPX, OTPX etc.",
+            "maxLength" : 10
+          },
+          "displayName" : {
+            "type" : "string",
+            "description" : "Contains the name used for display or enrichment purposes",
+            "maxLength" : 35
+          },
+          "shortName" : {
+            "type" : "string",
+            "description" : "Contains the name of the account, basically the short title of the account."
+          },
+          "stockExchange" : {
+            "type" : "string",
+            "description" : "Contains the stock exchange details where a particular security is usually dealt"
+          },
+          "ISIN" : {
+            "type" : "string",
+            "description" : "The international securities identification number of the instrument"
+          },
+          "valueDate" : {
+            "type" : "string",
+            "format" : "date",
+            "description" : "Indicates the value date on which the underlying accounting entry is to be given value (for interest purposes)"
+          },
+          "quantity" : {
+            "type" : "number",
+            "description" : "The nominal quantity"
+          },
+          "chequeNumber" : {
+            "type" : "number",
+            "description" : "Cheque number associated with the transaction or accounting entry.",
+            "maximum" : 50
+          },
+          "extensions" : {
+            "type" : "object",
+            "description" : "Indicates the extension data"
+          }
+        }
+      }
+    },
+    "TaxDistributionResponse" : {
+      "properties" : {
+        "header" : {
+          "$ref" : "#/definitions/QueryHeader"
+        },
+        "body" : {
+          "$ref" : "#/definitions/TaxDistributionResponseBody"
+        }
+      },
+      "description" : "TaxDistributionResponse"
+    },
+    "TaxDistributionResponseBody" : {
+      "type" : "array",
+      "items" : {
+        "type" : "object",
+        "properties" : {
+          "taxDetails" : {
+            "type" : "array",
+            "description" : "Specifies details about taxes for a party.",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "taxType" : {
+                  "type" : "string",
+                  "description" : "Indicates the tax identification type for the customer, ex-SSN, TIN, FTIN etc.",
+                  "maxLength" : 60
+                },
+                "taxCode" : {
+                  "type" : "string",
+                  "description" : "Represents a reference on the TAX table which will indicate the rate to be used for computation of taxation for the associated property",
+                  "maxLength" : 35
+                },
+                "taxRate" : {
+                  "type" : "string",
+                  "description" : "Indicates the tax rate to be applied on a transaction.",
+                  "maxLength" : 35
+                },
+                "taxAmount" : {
+                  "type" : "string",
+                  "description" : "Indicates the tax applicable for the transaction for a tax type.",
+                  "maxLength" : 60
+                }
+              }
+            }
+          },
+          "customerId" : {
+            "type" : "string",
+            "description" : "Identifier of the customer",
+            "maxLength" : 10
+          },
+          "transactionAmount" : {
+            "type" : "string",
+            "description" : "Contains the transaction amount. This is based on the currency, either local or foreign currency",
+            "maxLength" : 20
+          },
+          "transactionCurrency" : {
+            "type" : "string",
+            "description" : "Indicates the currency of the transaction. For example GBP, USD etc.",
+            "maxLength" : 3
+          },
+          "netAmount" : {
+            "type" : "string",
+            "description" : "Holds the total amount",
+            "maxLength" : 20
+          },
+          "grossAmount" : {
+            "type" : "string",
+            "description" : "Contains the gross amount",
+            "maxLength" : 20
+          },
+          "totalTax" : {
+            "type" : "string",
+            "description" : "Indicates the total amount of taxes applicable for the transaction",
+            "maxLength" : 20
+          },
+          "extensions" : {
+            "type" : "object",
+            "description" : "Indicates the extension data"
+          }
+        }
+      }
+    }
+  }
+}
