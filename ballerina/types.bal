@@ -498,5 +498,5 @@ public type AccountTransactionsResponse record {
 
 # Provides API key configurations needed when communicating with a remote HTTP endpoint.
 public type ApiKeysConfig record {|
-    string authorization;
+    string apikey;
 |};

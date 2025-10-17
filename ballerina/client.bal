@@ -33,7 +33,7 @@ public isolated client class Client {
         string resourcePath = string `/${getEncodedUri(entryReference)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
-            headerValues["Authorization"] = self.apiKeyConfig?.authorization;
+            headerValues["apikey"] = self.apiKeyConfig?.apikey;
         }
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         map<string|string[]> httpHeaders = http:getHeaderMap(headerValues);
@@ -50,7 +50,7 @@ public isolated client class Client {
         string resourcePath = string `/${getEncodedUri(transactionReference)}/transactions`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
-            headerValues["Authorization"] = self.apiKeyConfig?.authorization;
+            headerValues["apikey"] = self.apiKeyConfig?.apikey;
         }
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         map<string|string[]> httpHeaders = http:getHeaderMap(headerValues);
@@ -66,7 +66,7 @@ public isolated client class Client {
         string resourcePath = string `/`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
-            headerValues["Authorization"] = self.apiKeyConfig?.authorization;
+            headerValues["apikey"] = self.apiKeyConfig?.apikey;
         }
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         map<string|string[]> httpHeaders = http:getHeaderMap(headerValues);
@@ -82,7 +82,7 @@ public isolated client class Client {
         string resourcePath = string `/taxes`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
-            headerValues["Authorization"] = self.apiKeyConfig?.authorization;
+            headerValues["apikey"] = self.apiKeyConfig?.apikey;
         }
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         map<string|string[]> httpHeaders = http:getHeaderMap(headerValues);
