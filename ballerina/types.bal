@@ -164,10 +164,10 @@ public type StatementForTransactionResponseBodyInner record {
     @constraint:String {maxLength: 11}
     string notes?;
     # Display name or short name of the account specified
-    @constraint:String {maxLength: 11}
+    @constraint:String {maxLength: 110}
     string accountName?;
     # The additional text printed on descriptive statements in addition to the standard narrative and/or reference
-    @constraint:String {maxLength: 11}
+    @constraint:String {maxLength: 110}
     string narrative?;
     # Indicates the date on which this business activity is booked in the underlying system. The effective date and booking date could be different if systems allow forward/back dated business transactions. Dates are expected in YYYYMMDD format. If booking date is not passed, effective date would be assumed as booking date
     string bookingDate?;
@@ -175,7 +175,7 @@ public type StatementForTransactionResponseBodyInner record {
     @constraint:String {maxLength: 11}
     string currencyId?;
     # It is the transaction reference. This is the identifier of the transaction on Temenos Core Banking system
-    @constraint:String {maxLength: 11}
+    @constraint:String {maxLength: 110}
     string entryReference?;
     # Unique transaction identifier for retrieving the details of the transaction. For example: FT0102030333 etc
     @constraint:String {maxLength: 11}
@@ -335,7 +335,7 @@ public type ConnectionConfig record {|
 
 public type StatementForTransactionResponseBodyInner_images record {
     # Based on documentCode, the field defaults the required document codes
-    @constraint:String {maxLength: 11}
+    @constraint:String {maxLength: 110}
     string documentId?;
     # A system generated unique identifier for the image record
     @constraint:String {maxLength: 11}

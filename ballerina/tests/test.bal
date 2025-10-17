@@ -13,34 +13,45 @@
 // specific language governing permissions and limitations
 // under the License.
 
-// import ballerina/test;
-// import ballerina/io;
+import ballerina/test;
+import ballerina/io;
 
-// configurable ApiKeysConfig apiKeyConfig = ?;
+configurable ApiKeysConfig apiKeyConfig = ?;
+final string serviceUrl = "https://api.temenos.com/api/v2.4.0/holdings/transactions"; // Fixed double slash
+configurable string accountId = "156396";
+configurable string listType = "RECENT";
+configurable string transactionCount = "10";
+// configurable string customerId = "190317";
+// configurable string taxRate = "10";
+// configurable string transactionAmount = "1000";
+// configurable string transactionCurrency = "USD";
+// configurable string transactionReference = "AAACT25100YLCHKPRK";
+// configurable string entryReference = "209068141701763.220001";
 
-// final Client temenos = check new (apiKeyConfig);
 
-// @test:Config {}
-// isolated function testGetCustomers() returns error? {
-//     CustomerInformationResponse|error response = temenos->/customers.get();
-//     if response is CustomerInformationResponse {
-//         io:println("Success Response: ", response);
-//         test:assertTrue(true, "Successfully retrieved customer information");
-//     } else {
-//         io:println("Error Response: ", response.message());
-//         test:assertFail("Failed to retrieve customers: " + response.message());
-//     }
-// }
 
-// @test:Config {}
-// isolated function testGetCustomerDetails() returns error? {
-//     string customerId = "66052"; // Replace with a valid customerId from GET /customers response
-//     CustomerResponse|error response = temenos->/customers/[customerId].get();
-//     if response is CustomerResponse {
-//         io:println("Success Response for Customer Details: ", response);
-//         test:assertTrue(true, "Successfully retrieved customer details for ID: " + customerId);
-//     } else {
-//         io:println("Error Response for Customer Details: ", response.message());
-//         test:assertFail("Failed to retrieve customer details for ID " + customerId + ": " + response.message());
-//     }
-// }
+final ConnectionConfig config = {
+    auth: apiKeyConfig
+};
+
+final Client temenos = check new (config, serviceUrl);
+
+@test:Config {
+    groups: ["get_test"]
+}
+isolated function testGetTransactionDetails() returns error? {
+    GetAccountTransactionsQueries queries = {
+        listType: listType,
+        accountId: accountId,
+        transactionCount: transactionCount
+    };
+    AccountTransactionsResponse|error response = temenos->/.get(queries = queries);
+    if response is AccountTransactionsResponse {
+        io:println("Success Response: ", response);
+        test:assertTrue(true, "Successfully retrieved transaction details");
+    } else {
+        io:println("Error Response: ", response.message());
+        test:assertFail("Failed to retrieve transaction details: " + response.message());
+    }
+}
+
