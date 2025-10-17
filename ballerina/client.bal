@@ -12,7 +12,7 @@ public isolated client class Client {
     # + config - The configurations to be used when initializing the `connector` 
     # + serviceUrl - URL of the target service 
     # + return - An error if connector initialization failed 
-    public isolated function init(ConnectionConfig config, string serviceUrl = "https://api.temenos.com/api/v2.4.0/") returns error? {
+    public isolated function init(ConnectionConfig config, string serviceUrl = "https://api.temenos.com/api/v2.4.0//holdings/transactions") returns error? {
         http:ClientConfiguration httpClientConfig = {httpVersion: config.httpVersion, http1Settings: config.http1Settings, http2Settings: config.http2Settings, timeout: config.timeout, forwarded: config.forwarded, followRedirects: config.followRedirects, poolConfig: config.poolConfig, cache: config.cache, compression: config.compression, circuitBreaker: config.circuitBreaker, retryConfig: config.retryConfig, cookieConfig: config.cookieConfig, responseLimits: config.responseLimits, secureSocket: config.secureSocket, proxy: config.proxy, socketConfig: config.socketConfig, validation: config.validation, laxDataBinding: config.laxDataBinding};
         if config.auth is ApiKeysConfig {
             self.apiKeyConfig = (<ApiKeysConfig>config.auth).cloneReadOnly();
@@ -25,15 +25,15 @@ public isolated client class Client {
 
     # Retrieves transaction details for a specific accounting entry
     #
-    # + entryReference - It is the transaction reference. This is the identifier of the transaction on Temenos Core Banking system.
+    # + entryReference - It is the transaction reference. This is the identifier of the transaction on Temenos Core Banking system
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - TransactionDetailsResponse 
-    resource isolated function get holdings/transactions/[string entryReference](GetTransactionDetailsHeaders headers = {}, *GetTransactionDetailsQueries queries) returns TransactionDetailsResponse|error {
-        string resourcePath = string `/holdings/transactions/${getEncodedUri(entryReference)}`;
+    resource isolated function get [string entryReference](GetTransactionDetailsHeaders headers = {}, *GetTransactionDetailsQueries queries) returns TransactionDetailsResponse|error {
+        string resourcePath = string `/${getEncodedUri(entryReference)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
-            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+            headerValues["Authorization"] = self.apiKeyConfig?.authorization;
         }
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         map<string|string[]> httpHeaders = http:getHeaderMap(headerValues);
@@ -46,11 +46,11 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - StatementForTransactionResponse 
-    resource isolated function get holdings/transactions/[string transactionReference]/transactions(GetStatementForTransactionHeaders headers = {}, *GetStatementForTransactionQueries queries) returns StatementForTransactionResponse|error {
-        string resourcePath = string `/holdings/transactions/${getEncodedUri(transactionReference)}/transactions`;
+    resource isolated function get [string transactionReference]/transactions(GetStatementForTransactionHeaders headers = {}, *GetStatementForTransactionQueries queries) returns StatementForTransactionResponse|error {
+        string resourcePath = string `/${getEncodedUri(transactionReference)}/transactions`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
-            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+            headerValues["Authorization"] = self.apiKeyConfig?.authorization;
         }
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         map<string|string[]> httpHeaders = http:getHeaderMap(headerValues);
@@ -62,11 +62,11 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - AccountTransactionsResponse 
-    resource isolated function get holdings/transactions(GetAccountTransactionsHeaders headers = {}, *GetAccountTransactionsQueries queries) returns AccountTransactionsResponse|error {
-        string resourcePath = string `/holdings/transactions`;
+    resource isolated function get .(GetAccountTransactionsHeaders headers = {}, *GetAccountTransactionsQueries queries) returns AccountTransactionsResponse|error {
+        string resourcePath = string `/`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
-            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+            headerValues["Authorization"] = self.apiKeyConfig?.authorization;
         }
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         map<string|string[]> httpHeaders = http:getHeaderMap(headerValues);
@@ -78,11 +78,11 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - TaxDistributionResponse 
-    resource isolated function get holdings/transactions/taxes(CalculateTaxDistributionHeaders headers = {}, *CalculateTaxDistributionQueries queries) returns TaxDistributionResponse|error {
-        string resourcePath = string `/holdings/transactions/taxes`;
+    resource isolated function get taxes(CalculateTaxDistributionHeaders headers = {}, *CalculateTaxDistributionQueries queries) returns TaxDistributionResponse|error {
+        string resourcePath = string `/taxes`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
-            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+            headerValues["Authorization"] = self.apiKeyConfig?.authorization;
         }
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         map<string|string[]> httpHeaders = http:getHeaderMap(headerValues);
