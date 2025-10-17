@@ -25,7 +25,8 @@ configurable string customerId = "190317";
 configurable string taxRate = "10";
 configurable string transactionAmount = "1000";
 configurable string transactionCurrency = "USD";
-// configurable string transactionReference = "AAACT25100YLCHKPRK";
+
+configurable string transactionReference = "AAACT25100YLCHKPRK";
 // configurable string entryReference = "209068141701763.220001";
 
 
@@ -73,3 +74,20 @@ isolated function testGetTransactionTax() returns error? {
         io:println("Error Response: ", response);
     }
 }
+
+
+@test:Config {
+    groups: ["get_test3"]
+}
+isolated function testGetTransactionReference() returns error? {
+    StatementForTransactionResponse|error response = temenos->/[transactionReference]/transactions.get();
+    if response is StatementForTransactionResponse {
+        io:println("Success Response: ", response);
+        test:assertTrue(true, "Successfully retrieved transaction details");
+    } else {
+        io:println("Error Response: ", response.message());
+        test:assertFail("Failed to retrieve transaction details: " + response.message());
+    }
+}
+
+
